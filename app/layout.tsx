@@ -8,23 +8,23 @@ import { cn } from "@/lib/utils";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "RedditC",
-  description: "Reddit clone",
+	title: "RedditC",
+	description: "Reddit clone",
 };
 
 export default function RootLayout({
-  children,
+	children,
 }: {
-  children: React.ReactNode;
+	children: React.ReactNode;
 }) {
-  return (
-    <html lang="en">
-      <body className={cn("p-10", inter.className)}>
-        <NextProvider>
-          <Navbar />
-          <div>{children}</div>
-        </NextProvider>
-      </body>
-    </html>
-  );
+	return (
+		<html lang="en">
+			<body className={cn("pt-10 px-10", inter.className)}>
+				<NextProvider>
+					<Navbar />
+					<div className="pt-10">{children}</div>
+				</NextProvider>
+			</body>
+		</html>
+	);
 }
