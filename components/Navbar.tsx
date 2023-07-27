@@ -3,35 +3,42 @@
 import Link from "next/link";
 import React from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
-import { Button } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
+import { cn } from "@/lib/utils";
 
 const Navbar = () => {
-	const { data: session } = useSession();
+  const { data: session } = useSession();
 
-	return (
-		<nav className="flex justify-between items-center text-center sticky top-0 backdrop-blur-xl">
-			{/* <Image src={"/logo.png"} alt="logo image" height={30} width={125} /> */}
-			<h1 className="text-3xl font-bold">RedditC</h1>
-			<ul className="hidden sm:flex gap-10 items-center">
-				<li className="hover:font-bold ease-linear duration-150">
-					{session ? (
-						<Button onClick={() => signOut()} className="hidden sm:block">
-							Sign Out
-						</Button>
-					) : (
+  return (
+    <nav className="flex justify-between items-center text-center sticky top-0 backdrop-blur-xl">
+      {/* <Image src={"/logo.png"} alt="logo image" height={30} width={125} /> */}
+      <h1 className="text-3xl font-bold">RedditC</h1>
+      <ul className="hidden sm:flex gap-10 items-center">
+        <li className="hover:font-bold ease-linear duration-150">
+          {session ? (
+            <Button onClick={() => signOut()} className="hidden sm:block">
+              Sign Out
+            </Button>
+          ) : (
+            /*
 						<Button onClick={() => signIn()} className="hidden sm:block">
 							Sign In
 						</Button>
-						/*
-						<Link href="/signin" className="hidden sm:block rounded-lg ">
-							Sign In
-						</Link>
 						*/
-					)}
-				</li>
-			</ul>
-		</nav>
-	);
+            <Link
+              href="/signin"
+              className={cn(
+                "hidden sm:block",
+                buttonVariants({ variant: "default" }),
+              )}
+            >
+              Sign In
+            </Link>
+          )}
+        </li>
+      </ul>
+    </nav>
+  );
 };
 
 export default Navbar;
