@@ -10,7 +10,7 @@ import { ChevronLeft, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { FaGithub } from "react-icons/fa6";
 
-const page: FC = () => {
+const SignIn: FC = () => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
@@ -83,4 +83,4 @@ const page: FC = () => {
   );
 };
 
-export default page;
+export default SignIn;
