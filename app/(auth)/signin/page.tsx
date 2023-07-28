@@ -24,7 +24,6 @@ import { useForm } from "react-hook-form";
 
 const formSchema = z.object({
   username: z.string().min(2).max(50),
-  email: z.string().email().max(50),
   password: z.string().min(4).max(20),
 });
 
@@ -36,7 +35,6 @@ const SignIn: FC = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
-      email: "",
       password: "",
     },
   });
@@ -96,19 +94,6 @@ const SignIn: FC = () => {
                     <FormLabel>Username</FormLabel>
                     <FormControl>
                       <Input placeholder="RedditC" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input placeholder="redditc@redditc.com" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
