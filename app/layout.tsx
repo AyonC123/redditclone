@@ -4,27 +4,29 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import NextProvider from "@/components/NextProvider";
 import { cn } from "@/lib/utils";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-	title: "RedditC",
-	description: "Reddit clone",
+  title: "RedditC",
+  description: "Reddit clone",
 };
 
 export default function RootLayout({
-	children,
+  children,
 }: {
-	children: React.ReactNode;
+  children: React.ReactNode;
 }) {
-	return (
-		<html lang="en">
-			<body className={cn("pt-10 px-10", inter.className)}>
-				<NextProvider>
-					<Navbar />
-					<div className="pt-10">{children}</div>
-				</NextProvider>
-			</body>
-		</html>
-	);
+  return (
+    <html lang="en">
+      <body className={cn("pt-10 px-10", inter.className)}>
+        <NextProvider>
+          <Navbar />
+          <div className="pt-10">{children}</div>
+          <Toaster />
+        </NextProvider>
+      </body>
+    </html>
+  );
 }
