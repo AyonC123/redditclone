@@ -5,6 +5,7 @@ import React from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { Button, buttonVariants } from "./ui/button";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 const Navbar = () => {
   const { data: session } = useSession();
@@ -16,9 +17,18 @@ const Navbar = () => {
       <ul className="hidden sm:flex gap-10 items-center">
         <li className="hover:font-bold ease-linear duration-150">
           {session ? (
-            <Button onClick={() => signOut()} className="hidden sm:block">
-              Sign Out
-            </Button>
+            <div className="flex justify-evenly gap-10">
+              <Button onClick={() => signOut()} className="hidden sm:block">
+                Sign Out
+              </Button>
+              <Image
+                src={session.user?.image!}
+                alt="Profile Image"
+                width={30}
+                height={30}
+                className="h-10 w-10 rounded-3xl"
+              />
+            </div>
           ) : (
             /*
 						<Button onClick={() => signIn()} className="hidden sm:block">

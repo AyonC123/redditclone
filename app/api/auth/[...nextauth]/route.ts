@@ -11,22 +11,27 @@ const hanlder = NextAuth({
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "jsmith" },
+        username: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
         // Add logic here to look up the user from the credentials supplied
-        const user = { id: "1", name: "J Smith", email: "jsmith@example.com" };
 
-        if (user) {
-          // Any object returned will be saved in `user` property of the JWT
-          return user;
-        } else {
-          // If you return null then an error will be displayed advising the user to check their details.
+        const user = await (
+          await fetch(
+            `http://localhost:3000/api/user/signin?provider=credentials&name=${credentials?.username}&password=${credentials?.password!}`,
+          )
+        ).json();
+        if (user["Error"]) {
           return null;
-
-          // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
         }
+
+        return {
+          id: user["_id"],
+          name: user.name,
+          email: user.email,
+          image: user.image,
+        };
       },
     }),
   ],
@@ -35,6 +40,34 @@ const hanlder = NextAuth({
   callbacks: {
     async redirect() {
       return "/";
+    },
+    async session({ token, session }) {
+      if (token) {
+        session.user!.name = token.name;
+        session.user!.email = token.email;
+        session.user!.image = token.picture;
+      }
+
+      return session;
+    },
+
+    async jwt({ token, account }) {
+      let dbUser;
+      if (account?.provider == "github") {
+        dbUser = await (
+          await fetch(
+            `http://localhost:3000/api/user/signin?provider=github&name=${token.name}&email=${token.email}&image=${token.picture}`,
+          )
+        ).json();
+
+        return {
+          name: dbUser.name,
+          email: dbUser.email,
+          picture: dbUser.image,
+        };
+      }
+
+      return token;
     },
   },
 });
