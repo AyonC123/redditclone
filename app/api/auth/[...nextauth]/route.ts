@@ -19,7 +19,9 @@ const hanlder = NextAuth({
 
         const user = await (
           await fetch(
-            `http://localhost:3000/api/user/signin?provider=credentials&name=${credentials?.username}&password=${credentials?.password!}`,
+            `${
+              process.env.NEXT_PUBLIC_URL
+            }/api/user/signin?provider=credentials&name=${credentials?.username}&password=${credentials?.password!}`,
           )
         ).json();
         if (user["Error"]) {
@@ -56,7 +58,7 @@ const hanlder = NextAuth({
       if (account?.provider == "github") {
         dbUser = await (
           await fetch(
-            `http://localhost:3000/api/user/signin?provider=github&name=${token.name}&email=${token.email}&image=${token.picture}`,
+            `${process.env.NEXT_PUBLIC_URL}/api/user/signin?provider=github&name=${token.name}&email=${token.email}&image=${token.picture}`,
           )
         ).json();
 

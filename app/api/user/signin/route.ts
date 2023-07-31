@@ -36,7 +36,7 @@ export async function GET(req: NextRequest) {
 
     if (!user) {
       const res = await (
-        await fetch("http://localhost:3000/api/user/signup", {
+        await fetch(`${process.env.NEXT_PUBLIC_URL}/api/user/signup`, {
           method: "POST",
           body: JSON.stringify({ name, email, password, image }),
         })
