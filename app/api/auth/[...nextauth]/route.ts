@@ -48,6 +48,7 @@ const hanlder = NextAuth({
         session.user!.name = token.name;
         session.user!.email = token.email;
         session.user!.image = token.picture;
+        session.user!.id = token.sub;
       }
 
       return session;
@@ -66,6 +67,7 @@ const hanlder = NextAuth({
           name: dbUser.name,
           email: dbUser.email,
           picture: dbUser.image,
+          sub: dbUser["_id"],
         };
       }
 

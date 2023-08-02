@@ -20,10 +20,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn("pt-10 px-10", inter.className)}>
+      <body className={inter.className}>
         <NextProvider>
           <Navbar />
-          <div className="pt-10">{children}</div>
+          <div className="px-10 pt-10">{children}</div>
           <Toaster />
         </NextProvider>
       </body>
