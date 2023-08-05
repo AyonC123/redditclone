@@ -4,7 +4,6 @@ import Link from "next/link";
 import React from "react";
 import { useSession, signOut } from "next-auth/react";
 import { buttonVariants } from "./ui/button";
-import { cn } from "@/lib/utils";
 import Image from "next/image";
 import {
   DropdownMenu,
@@ -15,6 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "./ui/input";
+import { CreateCommunity } from "./CreateCommunity";
 
 const Navbar = () => {
   const { data: session } = useSession();
@@ -43,7 +43,7 @@ const Navbar = () => {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>Profile</DropdownMenuItem>
                   <DropdownMenuItem>
-                    <Link href={"r/create"}>Create Community</Link>
+                    <Link href={"/r/create"}>Create Community</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
                     <div onClick={() => signOut()} className="cursor-pointer">

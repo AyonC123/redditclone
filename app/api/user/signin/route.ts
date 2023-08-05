@@ -2,8 +2,7 @@ import { NextRequest } from "next/server";
 import clientPromise from "@/lib/MongoConnect";
 
 export async function GET(req: NextRequest) {
-  const url = new URL(req.url);
-  const searchParams = new URLSearchParams(url.search);
+  const { searchParams } = new URL(req.url);
   const provider = searchParams.get("provider"); // Retrieves the value of the 'skip' parameter
   const name = searchParams.get("name") || "";
   const email = searchParams.get("email") || "";
