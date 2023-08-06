@@ -14,7 +14,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "./ui/input";
-import { CreateCommunity } from "./CreateCommunity";
 
 const Navbar = () => {
   const { data: session } = useSession();
