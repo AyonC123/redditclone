@@ -23,7 +23,7 @@ const formSchema = z.object({
   description: z.string().max(1000),
 });
 
-export default function page() {
+export default function Create() {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
