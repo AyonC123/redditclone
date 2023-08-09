@@ -17,6 +17,8 @@ import { useForm } from "react-hook-form";
 import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
@@ -26,6 +28,8 @@ const formSchema = z.object({
 export default function Create() {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const router = useRouter();
+  const { data: session } = useSession();
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -49,8 +53,34 @@ export default function Create() {
             "This name is reserved, use another name for your community",
           variant: "destructive",
         });
+
+        return;
       }
+
+      const res = await (
+        await fetch(`${process.env.NEXT_PUBLIC_URL}/api/subreddit`, {
+          method: "POST",
+          body: JSON.stringify({
+            owner: session?.user.name,
+            name: values.name,
+            description: values.description,
+          }),
+        })
+      ).json();
+
+      if (res["Error"]) {
+        toast({
+          title: "Error",
+          description: res["Error"],
+          variant: "destructive",
+        });
+
+        return;
+      }
+
+      router.push(`/r/${res.name}`);
     } catch (error) {
+      console.log(error);
       toast({
         title: "Error",
         description: "There was an error while creating a community",
