@@ -37,9 +37,19 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const name = searchParams.get("name");
+
+  const client = await clientPromise;
+  const db = client.db("redditclone");
+
+  const subreddit = await db.collection("subreddits").findOne({
+    name,
+  });
+
   return new Response(
     JSON.stringify({
-      msg: "Hello World",
+      subreddit,
     }),
   );
 }
