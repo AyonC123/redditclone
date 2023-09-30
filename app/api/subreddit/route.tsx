@@ -47,9 +47,5 @@ export async function GET(req: NextRequest) {
     name,
   });
 
-  return new Response(
-    JSON.stringify({
-      subreddit,
-    }),
-  );
+  return new Response(JSON.stringify(subreddit));
 }

@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { signIn } from "next-auth/react";
-import React from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
@@ -35,7 +35,7 @@ const signUpFormSchema = z.object({
 
 export default function Home() {
   const { toast } = useToast();
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const signInForm = useForm<z.infer<typeof signInFormSchema>>({
     resolver: zodResolver(signInFormSchema),
@@ -58,7 +58,6 @@ export default function Home() {
     setIsLoading(true);
 
     try {
-      console.log(values);
       await signIn("credentials", values);
     } catch (error) {
       toast({
@@ -84,6 +83,7 @@ export default function Home() {
             email: values.email,
             password: values.password,
             image: `https://api.dicebear.com/6.x/initials/svg?backgroundType=gradientLinear&seed=${values.username}`,
+            following: [],
           }),
         })
       ).json();
@@ -210,7 +210,7 @@ export default function Home() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Username</FormLabel>
+                    <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input placeholder="Email" {...field} />
                     </FormControl>
